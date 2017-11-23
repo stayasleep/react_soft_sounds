@@ -5,25 +5,51 @@ import Equalizer from 'material-ui/svg-icons/av/equalizer';
 import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleOutline from 'material-ui/svg-icons/av/pause-circle-outline';
 import IconButton from 'material-ui/IconButton';
+import Ambient from '../component/sound_generator/index';
 
 class Home extends Component{
     constructor(props){
         super(props);
         this.state={
             play: false,
+            audio:0,
         };
         this.togglePlay = this.togglePlay.bind(this);
+        //this.handleAudio = this.handleAudio.bind(this);
+        this.handleSlider = this.handleSlider.bind(this);
     }
+
+    componentDidMount(){
+        // const audio = this.audioElement;
+    }
+    handleSlider(event, value){
+        const audio = this.audioElement;
+        if(value > 0){
+            audio.currentTime=0;
+            audio.volume = value;
+            //audio.play();
+
+        }else{
+            audio.currentTime = 0;
+            audio.volume =0;
+            audio.pause();
+        }
+        if(this.state.play){
+            audio.play();
+        }
+        console.log('audio',audio.volume,audio.currentTime);
+        this.setState({audio: value});
+    }
+
 
     togglePlay(){
         //do api call
         this.setState({play: !this.state.play});
     }
     render(){
-        console.log('state',this.state);
-        const {play} = this.state.play;
+        console.log('home props',this);
         return(
-            <div>
+            <div ref="ref1">
                 <div className="player-controls" style={{margin:"2em 0"}}>
                     <div className="randomizer" style={{alignSelf:"center"}}>
                         <IconButton iconStyle={{width: 60, height:60}}>
@@ -42,9 +68,14 @@ class Home extends Component{
                         <Cancel style={{width: 60, height:60}} />
                     </div>
                 </div>
-                <div>
-
-                    NOISE COMPONENTS HERE
+                <div ref="ref2">
+                    <Ambient
+                        inputRef={el=>this.audioElement = el}
+                        noise="rain"
+                        handleSlider={this.handleSlider}
+                        volume={this.state.audio}
+                    />
+                    {/*{this.handleAudio()}*/}
                 </div>
             </div>
         )
