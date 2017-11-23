@@ -22,6 +22,15 @@ class Home extends Component{
     componentDidMount(){
         // const audio = this.audioElement;
     }
+    componentWillUpdate(nextProps,nextState){
+        const audio = this.audioElement;
+        if(nextState.play){
+            audio.play();
+        }
+        if(!nextState.play){
+            audio.pause();
+        }
+    }
     handleSlider(event, value){
         const audio = this.audioElement;
         if(value > 0){
