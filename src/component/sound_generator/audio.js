@@ -10,6 +10,7 @@ const AudioPlayer = (props) =>{
             //src="../../sounds/rain-01.mp3"
             ref={props.inputRef}
             src={Rain}
+
         />
     )
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Equalizer from 'material-ui/svg-icons/av/equalizer';
@@ -34,18 +35,13 @@ class Home extends Component{
     handleSlider(event, value){
         const audio = this.audioElement;
         if(value > 0){
-            audio.currentTime=0;
             audio.volume = value;
-            //audio.play();
-
         }else{
             audio.currentTime = 0;
             audio.volume =0;
             audio.pause();
         }
-        if(this.state.play){
-            audio.play();
-        }
+
         console.log('audio',audio.volume,audio.currentTime);
         this.setState({audio: value});
     }
@@ -56,7 +52,7 @@ class Home extends Component{
         this.setState({play: !this.state.play});
     }
     render(){
-        console.log('home props',this);
+        console.log('home props',this.props);
         return(
             <div ref="ref1">
                 <div className="player-controls" style={{margin:"2em 0"}}>
@@ -78,17 +74,30 @@ class Home extends Component{
                     </div>
                 </div>
                 <div ref="ref2">
-                    <Ambient
-                        inputRef={el=>this.audioElement = el}
-                        noise="rain"
-                        handleSlider={this.handleSlider}
-                        volume={this.state.audio}
-                    />
-                    {/*{this.handleAudio()}*/}
+                    {/*<Ambient*/}
+                        {/*inputRef={el=>this.audioElement = el}*/}
+                        {/*noise="rain"*/}
+                        {/*handleSlider={this.handleSlider}*/}
+                        {/*volume={this.state.audio}*/}
+                    {/*/>*/}
+                    {this.props.sound.map((noise,index)=>{
+                        return (
+                            <Ambient
+                                key={index}
+                                noise={noise}
+                                inputRef={el => this.audioElement=el}
+                            />
+                        )
+                    })}
                 </div>
             </div>
         )
     }
 }
 
-export default withRouter((Home));
+function mapStateToProps(state) {
+    return {
+        sound: state.sound.sounds
+    }
+}
+export default withRouter(connect(mapStateToProps,{})(Home));

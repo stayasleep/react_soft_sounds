@@ -1,19 +1,20 @@
 import React from 'react';
 import Slider from 'material-ui/Slider';
 import AudioPlayer from './audio';
-import Noise from '../../images/rain.svg';
+import rain from '../../images/rain.svg';
 
 const Ambient = (props) =>{
+    console.log('proppy',props);
     return(
         <div className="ambient-box">
             <div className="ambient-img" style={{backgroundImage: `url(../../images/${props.noise}.svg)`}}>
-                <img src={Noise}/>
+                <img src={rain}/>
             </div>
             <div className="ambient-title">
-                <h1>{props.noise}</h1>
+                <h1>{props.noise.name}</h1>
             </div>
             <Slider
-                value={props.volume}
+                value={props.noise.volume}
                 onChange={props.handleSlider}
             />
             <AudioPlayer
