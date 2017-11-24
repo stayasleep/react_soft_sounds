@@ -7,7 +7,7 @@ import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleOutline from 'material-ui/svg-icons/av/pause-circle-outline';
 import IconButton from 'material-ui/IconButton';
 import Ambient from '../component/sound_generator/index';
-import {changeVolume} from '../actions/index';
+import {cancelMedia,changeVolume, togglePlay} from '../actions/index';
 
 class Home extends Component{
     constructor(props){
@@ -17,6 +17,7 @@ class Home extends Component{
             audio:0,
         };
         this.togglePlay = this.togglePlay.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         //this.handleAudio = this.handleAudio.bind(this);
         this.handleSlider = this.handleSlider.bind(this);
     }
@@ -24,15 +25,15 @@ class Home extends Component{
     componentDidMount(){
         // const audio = this.audioElement;
     }
-    componentWillUpdate(nextProps,nextState){
-        const audio = this.audioElement;
-        if(nextState.play){
-            audio.play();
-        }
-        if(!nextState.play){
-            audio.pause();
-        }
-    }
+    // componentWillUpdate(nextProps,nextState){
+    //     const audio = this.audioElement;
+    //     if(nextState.play){
+    //         audio.play();
+    //     }
+    //     if(!nextState.play){
+    //         audio.pause();
+    //     }
+    // }
     ahandleSlider(event, value){
         const audio = this.audioElement;
         if(value > 0){
@@ -45,6 +46,17 @@ class Home extends Component{
 
         console.log('audio',audio.volume,audio.currentTime);
         this.setState({audio: value});
+    }
+
+    handleCancel(){
+        //reset everything to null
+        //play: false,
+        const resetArr = this.props.sound.map((noise,index)=>{
+            return {name: noise.name, volume: 0, src: noise.src, img: noise.img};
+        });
+        console.log('cancelled bub', resetArr);
+        const resetObj = {play: false, sounds: resetArr};
+        this.props.dispatch(cancelMedia(resetObj));
     }
 
     handleSlider(index,value){
@@ -62,7 +74,9 @@ class Home extends Component{
 
     togglePlay(){
         //do api call
-        this.setState({play: !this.state.play});
+        const { play } = this.props;
+        this.props.dispatch(togglePlay(!play));
+        // this.setState({play: !this.state.play});
     }
     render(){
         console.log('home props',this.props);
@@ -76,14 +90,16 @@ class Home extends Component{
                     </div>
                     <div className="play stop">
                         <IconButton onClick={this.togglePlay} iconStyle={{width: 120, height: 120}}>
-                            {!this.state.play ?
+                            {!this.props.play ?
                                 <PlayCircleOutline/> :
                                 <PauseCircleOutline/>
                             }
                         </IconButton>
                     </div>
                     <div className="reset" style={{alignSelf:"center"}}>
+                        <IconButton onClick={this.handleCancel} iconStyle={{width:60, height:60}}>
                         <Cancel style={{width: 60, height:60}} />
+                        </IconButton>
                     </div>
                 </div>
                 <div ref="ref2" className="row">
@@ -99,7 +115,8 @@ class Home extends Component{
                                 key={index}
                                 position={index}
                                 noise={noise}
-                                inputRef={el => this.audioElement=el}
+                                play={this.props.play}
+                                //inputRef={el => this.audioElement=el}
                                 onSlider={(index,value)=>this.handleSlider(index,value) }
                             />
                         )
@@ -112,6 +129,7 @@ class Home extends Component{
 
 function mapStateToProps(state) {
     return {
+        play: state.sound.play,
         sound: state.sound.sounds
     }
 }
