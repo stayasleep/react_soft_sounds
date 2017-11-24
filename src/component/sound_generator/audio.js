@@ -9,7 +9,8 @@ const AudioPlayer = (props) =>{
             loop={true}
             //src="../../sounds/rain-01.mp3"
             ref={props.inputRef}
-            src={Rain}
+            //src={Rain}
+            src={props.src}
 
         />
     )

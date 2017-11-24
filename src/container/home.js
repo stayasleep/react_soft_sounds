@@ -7,6 +7,7 @@ import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleOutline from 'material-ui/svg-icons/av/pause-circle-outline';
 import IconButton from 'material-ui/IconButton';
 import Ambient from '../component/sound_generator/index';
+import {changeVolume} from '../actions/index';
 
 class Home extends Component{
     constructor(props){
@@ -32,7 +33,7 @@ class Home extends Component{
             audio.pause();
         }
     }
-    handleSlider(event, value){
+    ahandleSlider(event, value){
         const audio = this.audioElement;
         if(value > 0){
             audio.volume = value;
@@ -46,6 +47,18 @@ class Home extends Component{
         this.setState({audio: value});
     }
 
+    handleSlider(index,value){
+        console.log('particular sound', index);
+        console.log('its val,',value);
+        const soundArr = this.props.sound.slice();
+        let temp = Object.assign({},soundArr[index],{volume:value});
+        console.log('temmmmmppppp',temp);
+        soundArr[index]=temp;
+        console.log('new temmmp',soundArr);
+        this.props.dispatch(changeVolume(soundArr));
+
+    }
+
 
     togglePlay(){
         //do api call
@@ -54,7 +67,7 @@ class Home extends Component{
     render(){
         console.log('home props',this.props);
         return(
-            <div ref="ref1">
+            <div ref="ref1" className="container-fluid">
                 <div className="player-controls" style={{margin:"2em 0"}}>
                     <div className="randomizer" style={{alignSelf:"center"}}>
                         <IconButton iconStyle={{width: 60, height:60}}>
@@ -73,7 +86,7 @@ class Home extends Component{
                         <Cancel style={{width: 60, height:60}} />
                     </div>
                 </div>
-                <div ref="ref2">
+                <div ref="ref2" className="row">
                     {/*<Ambient*/}
                         {/*inputRef={el=>this.audioElement = el}*/}
                         {/*noise="rain"*/}
@@ -84,8 +97,10 @@ class Home extends Component{
                         return (
                             <Ambient
                                 key={index}
+                                position={index}
                                 noise={noise}
                                 inputRef={el => this.audioElement=el}
+                                onSlider={(index,value)=>this.handleSlider(index,value) }
                             />
                         )
                     })}
@@ -100,4 +115,4 @@ function mapStateToProps(state) {
         sound: state.sound.sounds
     }
 }
-export default withRouter(connect(mapStateToProps,{})(Home));
+export default withRouter(connect(mapStateToProps)(Home));
