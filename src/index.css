@@ -1,7 +1,10 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #FFF;
+    font-family: sans-serif;
+    background: url('./images/background.jpg') no-repeat center;
+    background-size: cover;
 }
 
 .player-controls {

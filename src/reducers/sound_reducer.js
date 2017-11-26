@@ -1,16 +1,24 @@
 import Rain from './../sounds/rain-01.mp3';
 import Fire from './../sounds/fire.mp3';
 import Wind from './../sounds/wind.mp3';
-// import rain from './../images/rain.svg';
+import WhiteNoise from './../sounds/white_noise.mp3';
+import Lawn from './../sounds/grass.mp3';
 import fire from './../images/fire.svg';
-import rain from './../images/cloud.svg';
+import rain from './../images/raining.svg';
+import wind from './../images/wind.svg';
+import thunder from './../images/thunder.svg';
+import lawn from './../images/trees.svg';
+import white_nosie from './../images/white_noise.svg';
 import {CANCEL_ALL,TOGGLE_PLAY,VOLUME_CHANGE} from '../actions/type';
 
 
 const defaultState = {
     sounds:[
         {name:'rain', volume: 0, src: Rain, img: rain},
-        {name:'fire', volume: 0, src: Fire, img: fire}
+        {name:'fire', volume: 0, src: Fire, img: fire},
+        {name: 'wind', volume: 0, src: Wind, img: wind},
+        {name: 'white noise', volume:0, src: WhiteNoise, img: white_nosie},
+        {name:'Trimming Grass', volume: 0, src: Lawn, img: lawn}
         ],
     play: false,
 };

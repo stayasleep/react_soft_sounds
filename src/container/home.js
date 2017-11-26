@@ -7,6 +7,7 @@ import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleOutline from 'material-ui/svg-icons/av/pause-circle-outline';
 import IconButton from 'material-ui/IconButton';
 import Ambient from '../component/sound_generator/index';
+import {grey500, grey100, grey900,grey700,grey200, grey400, grey300} from 'material-ui/styles/colors';
 import {cancelMedia,changeVolume, togglePlay} from '../actions/index';
 
 class Home extends Component{
@@ -50,7 +51,6 @@ class Home extends Component{
 
     handleCancel(){
         //reset everything to null
-        //play: false,
         const resetArr = this.props.sound.map((noise,index)=>{
             return {name: noise.name, volume: 0, src: noise.src, img: noise.img};
         });
@@ -85,30 +85,24 @@ class Home extends Component{
                 <div className="player-controls" style={{margin:"2em 0"}}>
                     <div className="randomizer" style={{alignSelf:"center"}}>
                         <IconButton iconStyle={{width: 60, height:60}}>
-                            <Equalizer />
+                            <Equalizer hoverColor={grey400}/>
                         </IconButton>
                     </div>
                     <div className="play stop">
-                        <IconButton onClick={this.togglePlay} iconStyle={{width: 120, height: 120}}>
+                        <IconButton onClick={this.togglePlay} iconStyle={{width: 120, height: 120}} touch={true} tooltipPosition={'bottom-right'} tooltip={!this.props.play ? "Play": "Pause"}>
                             {!this.props.play ?
-                                <PlayCircleOutline/> :
-                                <PauseCircleOutline/>
+                                <PlayCircleOutline hoverColor={grey400}/> :
+                                <PauseCircleOutline hoverColor={grey400} />
                             }
                         </IconButton>
                     </div>
                     <div className="reset" style={{alignSelf:"center"}}>
-                        <IconButton onClick={this.handleCancel} iconStyle={{width:60, height:60}}>
-                        <Cancel style={{width: 60, height:60}} />
+                        <IconButton onClick={this.handleCancel} iconStyle={{width:60, height:60}} tooltip="Cancel Mix" touch={true} tooltipPosition={'bottom-right'}>
+                        <Cancel hoverColor={grey400} style={{width: 60, height:60}} />
                         </IconButton>
                     </div>
                 </div>
                 <div ref="ref2" className="row">
-                    {/*<Ambient*/}
-                        {/*inputRef={el=>this.audioElement = el}*/}
-                        {/*noise="rain"*/}
-                        {/*handleSlider={this.handleSlider}*/}
-                        {/*volume={this.state.audio}*/}
-                    {/*/>*/}
                     {this.props.sound.map((noise,index)=>{
                         return (
                             <Ambient

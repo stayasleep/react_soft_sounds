@@ -24,7 +24,7 @@ const muiTheme = getMuiTheme({
         accent1Color: indigo200,
         accent2Color: grey100,
         accent3Color: grey500,
-        textColor: fullBlack,
+        textColor: '#FFF',
         alternateTextColor: white,
         canvasColor: "#fff",
         borderColor: grey300,

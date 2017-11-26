@@ -68,7 +68,7 @@ class Ambient extends Component{
                         <img src={this.props.noise.img}/>
                     </div>
                     <div className="ambient-title">
-                        <h1>{this.props.noise.name}</h1>
+                        <h3 style={{textAlign: "center"}}>{this.props.noise.name}</h3>
                     </div>
                     <Slider
                         value={this.props.noise.volume}
