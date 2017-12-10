@@ -9,7 +9,7 @@ class About extends Component{
 
     render(){
         return(
-            <div>
+            <div className="container-fluid">
                 <Headers/>
                 this is the about page
             </div>
