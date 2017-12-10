@@ -41,7 +41,7 @@ class Ambient extends Component{
             <Col sm={3}>
                 <div className="ambient-box">
                     <div className="ambient-img" >
-                        <img src={this.props.noise.img}/>
+                        <img style={{width: 150}} src={this.props.noise.img}/>
                     </div>
                     <div className="ambient-title">
                         <h3 style={{textAlign: "center"}}>{this.props.noise.name}</h3>

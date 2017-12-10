@@ -8,7 +8,7 @@ import rain from './../images/raining.svg';
 import wind from './../images/wind.svg';
 import thunder from './../images/thunder.svg';
 import lawn from './../images/trees.svg';
-import white_nosie from './../images/white_noise.svg';
+import white_nosie from './../images/whitenoise.svg';
 import {CANCEL_ALL,TOGGLE_PLAY,VOLUME_CHANGE} from '../actions/type';
 
 
