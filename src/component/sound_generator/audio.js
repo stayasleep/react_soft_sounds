@@ -7,6 +7,7 @@ const AudioPlayer = (props) =>{
             loop={true}
             ref={props.inputRef}
             src={props.src}
+            muted={props.muted}
 
         />
     )

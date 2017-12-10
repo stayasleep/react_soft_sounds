@@ -40,21 +40,25 @@ class Ambient extends Component{
         return(
             <Col sm={3}>
                 <div className="ambient-box">
-                    <div className="ambient-img" >
+                    <div className="ambient-img" style={{textAlign:"center"}} >
                         <img style={{width: 150}} src={this.props.noise.img}/>
                     </div>
                     <div className="ambient-title">
                         <h3 style={{textAlign: "center"}}>{this.props.noise.name}</h3>
                     </div>
+                    <div style={{display:'flex',justifyContent:"center"}}>
                     <Slider
+                        style={{width:"60%"}}
                         value={this.props.noise.volume}
                         //onChange={props.onSlider}
                         onChange={(index,value) => {this.props.onSlider(this.props.position,value)}}
                     />
+                    </div>
                     <AudioPlayer
                         //inputRef={this.props.inputRef}
                         inputRef={el=>this.audioElement = el}
                         src={this.props.noise.src}
+                        muted={this.props.muted}
                     />
                 </div>
             </Col>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Headers from '../component/home/headers';
 
 class About extends Component{
 
@@ -9,6 +10,7 @@ class About extends Component{
     render(){
         return(
             <div>
+                <Headers/>
                 this is the about page
             </div>
         )

@@ -6,6 +6,9 @@ import Equalizer from 'material-ui/svg-icons/av/equalizer';
 import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleOutline from 'material-ui/svg-icons/av/pause-circle-outline';
 import IconButton from 'material-ui/IconButton';
+import Unmute from 'material-ui/svg-icons/av/volume-off';
+import Mute from 'material-ui/svg-icons/av/volume-up'
+import Headers from '../component/home/headers';
 import Ambient from '../component/sound_generator/index';
 import {grey500, grey100, grey900,grey700,grey200, grey400, grey300} from 'material-ui/styles/colors';
 import {cancelMedia,changeVolume, togglePlay} from '../actions/index';
@@ -16,25 +19,19 @@ class Home extends Component{
         this.state={
             play: false,
             audio:0,
+            mute: false
         };
         this.togglePlay = this.togglePlay.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         //this.handleAudio = this.handleAudio.bind(this);
         this.handleSlider = this.handleSlider.bind(this);
+        this.toggleMute = this.toggleMute.bind(this);
     }
 
     componentDidMount(){
         // const audio = this.audioElement;
     }
-    // componentWillUpdate(nextProps,nextState){
-    //     const audio = this.audioElement;
-    //     if(nextState.play){
-    //         audio.play();
-    //     }
-    //     if(!nextState.play){
-    //         audio.pause();
-    //     }
-    // }
+
     ahandleSlider(event, value){
         const audio = this.audioElement;
         if(value > 0){
@@ -78,10 +75,23 @@ class Home extends Component{
         this.props.dispatch(togglePlay(!play));
         // this.setState({play: !this.state.play});
     }
+    toggleMute(){
+        this.setState({mute: !this.state.mute});
+    }
     render(){
         console.log('home props',this.props);
         return(
             <div ref="ref1" className="container-fluid">
+                <Headers>
+                    <div className="player-mute">
+                        <IconButton onClick={this.toggleMute} touch={true} tooltipPosition={'bottom-right'} tooltip={!this.state.mute ? "Mute": "Unmute"}>
+                            {!this.state.mute ?
+                                <Mute hoverColor={grey400} /> :
+                                <Unmute hoverColor={grey400} />
+                            }
+                        </IconButton>
+                    </div>
+                </Headers>
                 <div className="player-controls" style={{margin:"2em 0"}}>
                     <div className="randomizer" style={{alignSelf:"center"}}>
                         <IconButton iconStyle={{width: 60, height:60}}>
@@ -110,6 +120,7 @@ class Home extends Component{
                                 position={index}
                                 noise={noise}
                                 play={this.props.play}
+                                muted={this.state.mute}
                                 //inputRef={el => this.audioElement=el}
                                 onSlider={(index,value)=>this.handleSlider(index,value) }
                             />
